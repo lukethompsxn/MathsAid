@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <SplitPane orientation="VERTICAL" prefHeight="100.0" prefWidth="1014.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="67.0" prefWidth="598.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Welcome to Maths Learning Aid">
+                           <font>
+                              <Font name="System Italic" size="21.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="269.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createCreation" prefHeight="27.0" prefWidth="60.0" text="Create" />
+                        <Button layoutX="341.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteCreation" prefHeight="27.0" prefWidth="60.0" text="Delete" />
+                        <Button layoutX="195.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#playCreation" prefHeight="27.0" prefWidth="60.0" text="Play" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <TextArea prefHeight="0.0" prefWidth="600.0" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <ListView fx:id="creationView" onMouseClicked="#currentSelection" prefHeight="300.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <MediaView fx:id="mediaViewer" fitHeight="300.0" fitWidth="400.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
