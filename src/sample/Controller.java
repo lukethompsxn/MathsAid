@@ -29,6 +29,7 @@ public class Controller implements Initializable{
     public MediaView mediaViewer;
     //public Set<String> items;
     //ObservableList observableList = new FXCollections().observableArrayList();
+    //bev
 
     public void playCreation() {
         String source = System.getProperty("user.dir") + "/data/Town_images.mp4";
