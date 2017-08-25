@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileDirector {
-    private List<String> _listOfFiles = FXCollections.observableArrayList();
+    private List<String> _listOfCreations = FXCollections.observableArrayList();
     private String _path;
     private static FileDirector fileDirector;
 
@@ -38,8 +38,8 @@ public class FileDirector {
         File dir = new File(_path + "/data");
         File[] files = dir.listFiles();
         for (File file: files) {
-            if (file.isDirectory() && !_listOfFiles.contains(file.getName())) {
-                _listOfFiles.add(file.getName());
+            if (file.isDirectory() && !_listOfCreations.contains(file.getName())) {
+                _listOfCreations.add(file.getName());
             }
         }
     }
@@ -53,7 +53,7 @@ public class FileDirector {
             }
         }
         dirPath.delete();
-        _listOfFiles.remove(creation);
+        _listOfCreations.remove(creation);
     }
 
     public boolean createDirectory(String creation) {
@@ -68,7 +68,11 @@ public class FileDirector {
     }
 
     public List<String> getList() {
-        return _listOfFiles;
+        return _listOfCreations;
+    }
+
+    public void addToList(String creation) {
+        _listOfCreations.add(creation);
     }
 
 

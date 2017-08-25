@@ -5,8 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,14 +24,18 @@ public class CreationController implements Initializable{
 
     public void playCreation() {
         System.out.println("print");
-        /*
-        String source = System.getProperty("user.dir") + "/data/Town_images.mp4";
-        System.out.println(source);
-        Media media = new Media(source);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaViewer.setMediaPlayer(mediaPlayer);
-        */
+        File video = new File(System.getProperty("user.dir") + "/data/Town_images.mp4");
+        try {
+            Media media = new Media(video.toURL().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setAutoPlay(true);
+            mediaViewer.setMediaPlayer(mediaPlayer);
+            //FIND A WAY TO AUTOCLOSE
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void createCreation() {
