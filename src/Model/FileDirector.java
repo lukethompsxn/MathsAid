@@ -1,5 +1,6 @@
 package Model;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import javafx.collections.FXCollections;
 
 import java.io.File;
@@ -10,6 +11,8 @@ public class FileDirector {
     private List<String> _listOfCreations = FXCollections.observableArrayList();
     private String _path;
     private static FileDirector fileDirector;
+    public String _fileSeperator = File.separator;
+    private String _currentItem;
 
 
     public static FileDirector instance() {
@@ -25,17 +28,23 @@ public class FileDirector {
         populateList();
     }
 
+    public void setCurrentItem(String item) {
+        _currentItem = item;
+    }
 
+    public String getCurrentItem() {
+        return _currentItem;
+    }
 
     public void directoryTest() {
-        if (!(new File(_path + "/data").exists())) {
-            File dir = new File(_path + "/data");
+        if (!(new File(_path + _fileSeperator + "data").exists())) {
+            File dir = new File(_path + _fileSeperator + "data");
             dir.mkdir();
         }
     }
 
     public void populateList() {
-        File dir = new File(_path + "/data");
+        File dir = new File(_path + _fileSeperator + "data");
         File[] files = dir.listFiles();
         for (File file: files) {
             if (file.isDirectory() && !_listOfCreations.contains(file.getName())) {
@@ -44,21 +53,24 @@ public class FileDirector {
         }
     }
 
-    public void deleteDirectory(String creation) {
-        File dirPath = new File(_path + "/data/" + creation);
-        File[] contents = dirPath.listFiles();
-        if (contents != null) {
-            for (File f : contents) {
-                f.delete();
+    public void deleteDirectory() {
+        if (_currentItem != null && !_currentItem.isEmpty()) {
+            File dirPath = new File(_path + _fileSeperator + "data" + _fileSeperator + _currentItem);
+            File[] contents = dirPath.listFiles();
+            if (contents != null) {
+                for (File f : contents) {
+                    f.delete();
+                }
             }
+            dirPath.delete();
+            _listOfCreations.remove(_currentItem);
         }
-        dirPath.delete();
-        _listOfCreations.remove(creation);
+
     }
 
     public boolean createDirectory(String creation) {
-        if (!(new File(_path + "/data/" + creation).exists())) {
-            File dir = new File(_path + "/data/" + creation);
+        if (!(new File(_path + _fileSeperator + "data" + _fileSeperator + creation).exists())) {
+            File dir = new File(_path + _fileSeperator + "data" + _fileSeperator + creation);
             dir.mkdir();
         }
         else {
