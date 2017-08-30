@@ -1,12 +1,11 @@
 package Controller;
 
+import MathsAid.Main;
 import Model.FileDirector;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -17,12 +16,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayViewController implements Initializable {
-    Pane _mainPane;
     String _fileSeperator = File.separator;
     FileDirector model = FileDirector.instance();
-    @FXML
-    public MediaView mediaView;
 
+    @FXML
+    private MediaView mediaView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,35 +33,15 @@ public class PlayViewController implements Initializable {
             mediaPlayer.setOnEndOfMedia(() -> {
                 try {
                     Parent root = FXMLLoader.load(getClass().getResource("../View/MainView.fxml"));
-                    //Pane parentPane = findParentPaneForNode(mediaView);
-                    _mainPane.getChildren().setAll(root);
+                    Main.mainPane.getChildren().setAll(root);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //CREATE STATIC METHOD AND OBJECT IN MAIN PASS IN PANE IN CONTRSUTVOR
-
     }
 
-    private Pane findParentPaneForNode(Node node) {
-        Pane parentPane = null ;
 
-        for (Node n = node.getParent(); n != null && parentPane == null; n = n.getParent()) {
-            if (n instanceof Pane) {
-                parentPane = (Pane) n;
-            }
-        }
-
-        return parentPane ;
-    }
-
-    public void setParentPane(Pane pane) {
-        _mainPane = pane;
-    }
 }

@@ -16,40 +16,41 @@ import java.util.ResourceBundle;
 
 public class CreationHeaderController implements Initializable {
     private FileDirector model = FileDirector.instance();
-    @FXML
-    public Button playBtn;
-    @FXML
-    public Button createBtn;
-    @FXML
-    public Button deleteBtn;
-    @FXML
-    public Pane mainPane;
-
     private String _fileSeperator = File.separator;
+
+    @FXML
+    private Button playBtn;
+    @FXML
+    private Button createBtn;
+    @FXML
+    private Button deleteBtn;
+    @FXML
+    private Pane mainPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Main.mainPane = mainPane;
         setPane("MainView", false);
-
     }
 
+    //Action for clicking the "Play" button, sets the pane to the play view
     public void playCreation() {
         setPane("PlayView", false);
     }
 
-
-
+    //Action for clicking "Create" button, sets the pane to the create menu view
     public void createCreation() {
         setPane("CreateMenuView", true);
         //
     }
 
+    //Action for clicking "Delete" button, launches pop up to confirm before deleting the creation
     public void deleteCreation() {
         model.deleteDirectory();
 
     }
 
+    //Helper method for setting the pane, takes the desired pane and a boolean for disabling buttons as arguments
     private void setPane(String name, Boolean bool) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(".." + _fileSeperator + "View" + _fileSeperator + name + ".fxml"));
@@ -61,6 +62,7 @@ public class CreationHeaderController implements Initializable {
         //disableBtns(bool);
     }
 
+    //Helper method for disabling the buttons, takes a boolean as argument
     private void disableBtns(boolean bool) {
         playBtn.setDisable(bool);
         createBtn.setDisable(bool);

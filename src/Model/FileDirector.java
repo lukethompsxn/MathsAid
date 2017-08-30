@@ -1,20 +1,19 @@
 package Model;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import javafx.collections.FXCollections;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileDirector {
     private List<String> _listOfCreations = FXCollections.observableArrayList();
     private String _path;
     private static FileDirector fileDirector;
-    public String _fileSeperator = File.separator;
+    private String _fileSeperator = File.separator;
     private String _currentItem;
 
 
+    //Singleton Constructor
     public static FileDirector instance() {
         if (fileDirector == null) {
             fileDirector = new FileDirector();
@@ -22,20 +21,24 @@ public class FileDirector {
         return fileDirector;
     }
 
+    //Private Constructor
     private FileDirector() {
         _path = System.getProperty("user.dir");
         directoryTest();
         populateList();
     }
 
+    //Sets current item from MainViewController when a creation is clicked on
     public void setCurrentItem(String item) {
         _currentItem = item;
     }
 
+    //Used in PlayViewController for getting the current creation so its video can be played
     public String getCurrentItem() {
         return _currentItem;
     }
 
+    //Performs the directory test to ensure the folder Data exists, if it doesnt exist it creates it
     public void directoryTest() {
         if (!(new File(_path + _fileSeperator + "data").exists())) {
             File dir = new File(_path + _fileSeperator + "data");
@@ -43,6 +46,8 @@ public class FileDirector {
         }
     }
 
+    //Called from the constructor of FileDirector, this means it is called on launch of the program to
+    //populate a list of creations which were already saved before start up
     public void populateList() {
         File dir = new File(_path + _fileSeperator + "data");
         File[] files = dir.listFiles();
@@ -53,6 +58,7 @@ public class FileDirector {
         }
     }
 
+    //Called from multiple different controllers whenever a creation needs to be deleted
     public void deleteDirectory() {
         if (_currentItem != null && !_currentItem.isEmpty()) {
             File dirPath = new File(_path + _fileSeperator + "data" + _fileSeperator + _currentItem);
@@ -68,6 +74,7 @@ public class FileDirector {
 
     }
 
+    //Called from CreateMenuController when a creation is being created
     public boolean createDirectory(String creation) {
         if (!(new File(_path + _fileSeperator + "data" + _fileSeperator + creation).exists())) {
             File dir = new File(_path + _fileSeperator + "data" + _fileSeperator + creation);
@@ -79,9 +86,11 @@ public class FileDirector {
         return true;
     }
 
+    //Called from MainViewController's initialize method to set the ListView to the list of creations on start up
     public List<String> getList() {
         return _listOfCreations;
     }
+
 
     public void addToList(String creation) {
         _listOfCreations.add(creation);
