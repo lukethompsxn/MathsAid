@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="299.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateMenuController">
+   <center>
+      <VBox prefHeight="243.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="307.0" prefWidth="600.0">
+               <children>
+                  <TextField fx:id="inputText" layoutX="300.0" layoutY="87.0" promptText="Name" />
+                  <Button layoutX="300.0" layoutY="126.0" mnemonicParsing="false" onAction="#cancelCreation" prefHeight="28.0" prefWidth="103.0" text="Cancel">
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Button>
+                  <Button layoutX="192.0" layoutY="126.0" mnemonicParsing="false" onAction="#createCreation" prefHeight="28.0" prefWidth="100.0" text="Submit" />
+                  <Label fx:id="errorLbl" prefHeight="17.0" prefWidth="192.0" text="  Error: Creation already exists" textFill="RED" visible="false" />
+                  <Label layoutX="95.0" layoutY="86.0" prefHeight="28.0" prefWidth="195.0" text="Enter a name for your creation:" textAlignment="CENTER">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

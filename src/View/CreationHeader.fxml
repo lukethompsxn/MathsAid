@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreationHeaderController">
+   <children>
+     <VBox BorderPane.alignment="CENTER">
+        <children>
+           <HBox>
+              <children>
+                 <SplitPane orientation="VERTICAL" prefHeight="107.0" prefWidth="600.0">
+                   <items>
+                     <AnchorPane>
+                          <children>
+                             <Label layoutX="14.0" layoutY="14.0" text="Welcome to Maths Learning Aid">
+                                <font>
+                                   <Font name="System Italic" size="21.0" />
+                                </font>
+                             </Label>
+                             <Button fx:id="createBtn" layoutX="269.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createCreation" prefHeight="27.0" prefWidth="60.0" text="Create" />
+                             <Button fx:id="deleteBtn" layoutX="341.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteCreation" prefHeight="27.0" prefWidth="60.0" text="Delete" />
+                             <Button fx:id="playBtn" layoutX="195.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#playCreation" prefHeight="27.0" prefWidth="60.0" text="Play" />
+                          </children>
+                       </AnchorPane>
+                   </items>
+                 </SplitPane>
+              </children>
+           </HBox>
+           <Pane fx:id="mainPane" prefHeight="306.0" prefWidth="600.0" />
+        </children>
+     </VBox>
+   </children>
+</Pane>
