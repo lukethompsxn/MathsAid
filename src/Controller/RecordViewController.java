@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -54,6 +55,18 @@ public class RecordViewController {
         }
     }
 
+    class Timer extends  Task<Integer> {
+
+        @Override
+        protected Integer call() throws Exception {
+            for (int i = 0; i < 30; i++) {
+                updateProgress(i, 29);
+                Thread.sleep(100);
+            }
+            return 0;
+        }
+    }
+
     //Action for "Record" button, loads process into bash and uses ffmpeg to record audio and generate video
     public void record() throws InterruptedException {
         disableBtns(true);
@@ -61,8 +74,13 @@ public class RecordViewController {
         task.setOnSucceeded((WorkerStateEvent event) -> {
             playbackAlert();
         });
-        Thread audioThread = new Thread(task);
-        audioThread.start();
+        Timer timer = new Timer();
+        progressBar.progressProperty().bind(timer.progressProperty());
+
+        new Thread(timer).start();
+        new Thread(task).start();
+
+
     }
 
 
@@ -87,6 +105,7 @@ public class RecordViewController {
         pbAlert.setTitle("Would you like to hear your recording back?");
         pbAlert.setHeaderText("Would you like to hear your recording back?");
         pbAlert.setContentText("Press \"Yes\" to hear your recording back, or \"No\" to continue");
+        pbAlert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         ButtonType yes = new ButtonType("Yes");
         ButtonType no = new ButtonType("No");
         pbAlert.getButtonTypes().setAll(yes, no);
@@ -102,6 +121,7 @@ public class RecordViewController {
                 redoAlert.setTitle("Do you want to record the audio again?");
                 redoAlert.setHeaderText("Do you want to record the audio again?");
                 redoAlert.setContentText("Please click \"Redo\" to record the audio again, or \"Continue\" to finish");
+                redoAlert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                 ButtonType redo = new ButtonType("Redo");
                 ButtonType cont = new ButtonType("Continue");
                 redoAlert.getButtonTypes().setAll(redo, cont);

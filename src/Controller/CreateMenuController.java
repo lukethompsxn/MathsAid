@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class CreateMenuController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Error: Creation Already Exists");
         alert.setContentText("This creation already exists, please select \"Overwrite\" to overwrite the creation, or \"OK\" to enter a new name:");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         ButtonType overwrite = new ButtonType("Overwrite");
         ButtonType OK = new ButtonType("OK");
         alert.getButtonTypes().setAll(overwrite,OK);
@@ -69,6 +71,7 @@ public class CreateMenuController {
         alert.setTitle("Error - You must enter a name");
         alert.setHeaderText("Error - You must enter a name");
         alert.setContentText("Please enter a name a press into the text box before clicking \"Submit\"");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
 
