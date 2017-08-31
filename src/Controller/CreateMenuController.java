@@ -26,7 +26,9 @@ public class CreateMenuController {
         } else if  (!success) {
             overwriteMessage();
         } else {
+            model.setCurrentItem(inputText.getCharacters().toString());
             setPane("RecordView");
+
         }
     }
 
@@ -57,7 +59,6 @@ public class CreateMenuController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == overwrite) {
             model.setCurrentItem(inputText.getCharacters().toString());
-            model.deleteDirectory();
             setPane("RecordView");
         }
     }

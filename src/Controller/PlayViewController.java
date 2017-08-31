@@ -24,7 +24,7 @@ public class PlayViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        File video = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4");
+        File video = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4");
         try {
             Media media = new Media(video.toURI().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
