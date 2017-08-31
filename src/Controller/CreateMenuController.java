@@ -27,8 +27,8 @@ public class CreateMenuController {
             overwriteMessage();
         } else {
             model.setCurrentItem(inputText.getCharacters().toString());
+            model.addToList(inputText.getCharacters().toString());
             setPane("RecordView");
-
         }
     }
 

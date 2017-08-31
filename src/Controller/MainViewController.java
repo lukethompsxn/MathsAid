@@ -4,6 +4,7 @@ import Model.FileDirector;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,9 @@ public class MainViewController implements Initializable{
     private String _fileSeperator = File.separator;
     private FileDirector model = FileDirector.instance();
     private String _currentItem;
+   // private Button playBtn;
+   // private Button deleteBtn;
+
     @FXML
     private ListView<String> creationView;
     @FXML
@@ -24,6 +28,8 @@ public class MainViewController implements Initializable{
 
     //Sets the current clicked on creation to "currentItem" in FileDirector and displays the preview for the creation
     public void currentSelection() {
+        //playBtn.setDisable(false);
+        //deleteBtn.setDisable(false);
         _currentItem = creationView.getSelectionModel().getSelectedItem();
         model.setCurrentItem(_currentItem);
         displayPreview();
@@ -38,7 +44,14 @@ public class MainViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
-        creationView.setItems(FXCollections.observableArrayList(model.getList()));
+        creationView.setItems(model.getList());
     }
+
+    /*
+    public void setPlayButton(Button pbtn, Button dbtn) {
+        playBtn = pbtn;
+        deleteBtn = dbtn;
+    }
+    */
 
 }

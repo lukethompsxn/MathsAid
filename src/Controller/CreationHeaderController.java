@@ -31,6 +31,7 @@ public class CreationHeaderController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Main.mainPane = mainPane;
         setPane("MainView", false);
+        //disableBtns(true);
     }
 
     //Action for clicking the "Play" button, sets the pane to the play view
@@ -56,6 +57,12 @@ public class CreationHeaderController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(".." + _fileSeperator + "View" + _fileSeperator + name + ".fxml"));
             Parent root = loader.load(); //needs to have a different controller because initialise is causing an infinite loop.
             Main.mainPane.getChildren().setAll(root);
+            /*
+            if  (name.equals("MainView")) {
+                MainViewController controller = loader.<MainViewController>getController();
+                controller.setPlayButton(playBtn, deleteBtn);
+            }
+            */
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,9 +70,14 @@ public class CreationHeaderController implements Initializable {
     }
 
     //Helper method for disabling the buttons, takes a boolean as argument
-    private void disableBtns(boolean bool) {
+    private void disableAllBtns(boolean bool) {
         playBtn.setDisable(bool);
         createBtn.setDisable(bool);
+        deleteBtn.setDisable(bool);
+    }
+
+    private void disableBtns(Boolean bool) {
+        playBtn.setDisable(bool);
         deleteBtn.setDisable(bool);
     }
 

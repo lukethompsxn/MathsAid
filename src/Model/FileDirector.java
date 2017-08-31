@@ -1,12 +1,13 @@
 package Model;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.List;
 
 public class FileDirector {
-    private List<String> _listOfCreations = FXCollections.observableArrayList();
+    private ObservableList<String> _listOfCreations = FXCollections.observableArrayList();
     private String _path;
     private static FileDirector fileDirector;
     private String _fileSeperator = File.separator;
@@ -86,8 +87,10 @@ public class FileDirector {
         return true;
     }
 
+
+
     //Called from MainViewController's initialize method to set the ListView to the list of creations on start up
-    public List<String> getList() {
+    public ObservableList<String> getList() {
         return _listOfCreations;
     }
 
@@ -95,6 +98,12 @@ public class FileDirector {
     public void addToList(String creation) {
         _listOfCreations.add(creation);
     }
+
+    public void removeFromList(String creation) {
+        _listOfCreations.remove(creation);
+    }
+
+
 
 
 }
