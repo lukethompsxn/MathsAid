@@ -48,7 +48,6 @@ public class CreationHeaderController implements Initializable {
     //Action for clicking "Delete" button, launches pop up to confirm before deleting the creation
     public void deleteCreation() {
         model.deleteDirectory();
-
     }
 
     //Helper method for setting the pane, takes the desired pane and a boolean for disabling buttons as arguments

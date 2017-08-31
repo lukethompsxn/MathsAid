@@ -2,6 +2,7 @@ package Controller;
 
 import MathsAid.Main;
 import Model.FileDirector;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,14 @@ public class RecordViewController {
     @FXML
     private ProgressBar progressBar;
 
+    class RunInBackground extends Task<Integer> {
+
+        @Override
+        protected Integer call() throws Exception {
+            return null;
+        }
+    }
+
     //Action for "Record" button, loads process into bash and uses ffmpeg to record audio and generate video
     public void record() {
         disableBtns(true);
@@ -37,6 +46,7 @@ public class RecordViewController {
 
     //Action for the "Cancel" button, returns to main menu
     public void cancel() {
+        model.deleteDirectory();
         setPane("MainView");
     }
 
@@ -103,7 +113,6 @@ public class RecordViewController {
             ie.printStackTrace();
             return;
         }
-
     }
 
     private void makeAndReturn() {
