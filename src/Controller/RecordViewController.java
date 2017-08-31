@@ -23,7 +23,7 @@ public class RecordViewController {
     private ProgressBar progressBar;
 
     //Action for "Record" button, loads process into bash and uses ffmpeg to record audio and generate video
-    public void recordAudio() {    //NEEDS MULTITHREADING
+    public void record() {    //NEEDS MULTITHREADING
         System.out.println("RECORDING SHIT");
     }
 

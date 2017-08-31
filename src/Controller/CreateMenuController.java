@@ -21,7 +21,9 @@ public class CreateMenuController {
     //Action for "Submit" button, ensures no duplicate creation then sets pane to recording pane
     public void createCreation() {
         boolean success = model.createDirectory(inputText.getCharacters().toString());
-        if (!success) {
+        if (inputText.getCharacters().toString() == null || inputText.getCharacters().toString().isEmpty()) {
+            emptyMessage();
+        } else if  (!success) {
             overwriteMessage();
         } else {
             setPane("RecordView");
@@ -58,6 +60,15 @@ public class CreateMenuController {
             model.deleteDirectory();
             setPane("RecordView");
         }
+    }
+
+    //Helper metod for displaying an alert message when no input text is given
+    private void emptyMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error - You must enter a name");
+        alert.setHeaderText("Error - You must enter a name");
+        alert.setContentText("Please enter a name a press into the text box before clicking \"Submit\"");
+        alert.showAndWait();
     }
 
 }

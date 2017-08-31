@@ -38,7 +38,7 @@ public class MainViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
-        creationView.setItems(FXCollections.observableArrayList(model.getList())); //is this downs
+        creationView.setItems(FXCollections.observableArrayList(model.getList()));
     }
 
 }
