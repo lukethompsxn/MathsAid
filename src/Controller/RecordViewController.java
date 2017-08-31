@@ -3,6 +3,7 @@ package Controller;
 import MathsAid.Main;
 import Model.FileDirector;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,21 +29,42 @@ public class RecordViewController {
     @FXML
     private ProgressBar progressBar;
 
-    class RunInBackground extends Task<Integer> {
+    class VideoInBackground extends Task<Integer> {
 
         @Override
         protected Integer call() throws Exception {
-            return null;
+            String generateCmd = "ffmpeg -y -f lavfi -i color=c=pink:s=480x360:d=3 -vf \"drawtext=fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + model.getCurrentItem() + "\" data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4";
+            String combineCmd = "ffmpeg -y -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4" + " -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3 -c copy data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4";
+            String createThumbnail = "ffmpeg -ss 0.1 -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4 -t 1 -s 480x360 -f mjpeg data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "thumbnail.jpg";
+
+            runInBash(generateCmd);
+            runInBash(combineCmd);
+            runInBash(createThumbnail);
+            return 0;
+        }
+    }
+
+    class AudioInBackground extends  Task<Integer> {
+
+        @Override
+        protected Integer call() throws Exception {
+            String cmd = "ffmpeg -y -f alsa -i default -t 3 -acodec libmp3lame data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3";
+            runInBash(cmd);
+            return 0;
         }
     }
 
     //Action for "Record" button, loads process into bash and uses ffmpeg to record audio and generate video
-    public void record() {
+    public void record() throws InterruptedException {
         disableBtns(true);
-        String cmd = "ffmpeg -y -f alsa -i default -t 3 -acodec libmp3lame data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3";
-        runInBash(cmd); //multithead this
-        playbackAlert();
+        AudioInBackground task = new AudioInBackground();
+        task.setOnSucceeded((WorkerStateEvent event) -> {
+            playbackAlert();
+        });
+        Thread audioThread = new Thread(task);
+        audioThread.start();
     }
+
 
     //Action for the "Cancel" button, returns to main menu
     public void cancel() {
@@ -116,14 +138,8 @@ public class RecordViewController {
     }
 
     private void makeAndReturn() {
-        String generateCmd = "ffmpeg -y -f lavfi -i color=c=pink:s=480x360:d=3 -vf \"drawtext=fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + model.getCurrentItem() + "\" data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4";
-        String combineCmd = "ffmpeg -y -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4" + " -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3 -c copy data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4";
-        String createThumbnail = "ffmpeg -ss 0.1 -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4 -t 1 -s 480x360 -f mjpeg data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "thumbnail.jpg";
-
-        runInBash(generateCmd);
-        runInBash(combineCmd);
-        runInBash(createThumbnail);
-
+        VideoInBackground task = new VideoInBackground();
+        new Thread(task).start();
         setPane("MainView");
     }
 
