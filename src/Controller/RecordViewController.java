@@ -119,7 +119,6 @@ public class RecordViewController {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia(() -> {
-            	System.out.println("bev");
                 Alert redoAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 redoAlert.setTitle("Do you want to record the audio again?");
                 redoAlert.setHeaderText("Do you want to record the audio again?");
