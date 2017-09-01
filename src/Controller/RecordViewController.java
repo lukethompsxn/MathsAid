@@ -22,6 +22,7 @@ import java.util.Optional;
 public class RecordViewController {
     String _fileSeperator = File.separator;
     FileDirector model = FileDirector.instance();
+    MediaPlayer mediaPlayer;
 
     @FXML
     private Button recordBtn;
@@ -63,6 +64,7 @@ public class RecordViewController {
                 updateProgress(i, 29);
                 Thread.sleep(100);
             }
+            progressBar.progressProperty().unbind();
             return 0;
         }
     }
@@ -114,7 +116,7 @@ public class RecordViewController {
         if (result.get() == yes) {
             File file = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3");
             Media media = new Media(file.toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia(() -> {
             	System.out.println("bev");
@@ -132,6 +134,7 @@ public class RecordViewController {
                     makeAndReturn();
                 } else {
                     disableBtns(false);
+                    progressBar.setProgress(0.0);
                 }
             });
         }
