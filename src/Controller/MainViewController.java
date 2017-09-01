@@ -20,25 +20,11 @@ public class MainViewController implements Initializable{
     private String _fileSeperator = File.separator;
     private FileDirector model = FileDirector.instance();
     private String _currentItem;
-   // private Button playBtn;
-   // private Button deleteBtn;
 
     @FXML
     private ListView<String> creationView;
     @FXML
     private ImageView previewBox;
-
-    /*
-    //Sets the current clicked on creation to "currentItem" in FileDirector and displays the preview for the creation
-    public void currentSelection() {
-        _currentItem = creationView.getSelectionModel().getSelectedItem();
-        model.setCurrentItem(_currentItem);
-        if (_currentItem != null) {
-            Main.togglePlayDeleteBtns(false);
-            displayPreview();
-        }
-
-    } */
 
     //Displays the preview of the current clicked on creation from the list
     private void displayPreview() {

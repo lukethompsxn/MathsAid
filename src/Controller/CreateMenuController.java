@@ -2,17 +2,22 @@ package Controller;
 
 import MathsAid.Main;
 import Model.FileDirector;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class CreateMenuController {
+public class CreateMenuController implements Initializable{
     private FileDirector model = FileDirector.instance();
     private String _fileSeperator = File.separator;
 
@@ -75,5 +80,16 @@ public class CreateMenuController {
         alert.showAndWait();
     }
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        inputText.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override public void handle(KeyEvent keyEvent) {
+                if (!keyEvent.getCharacter().matches("^[a-zA-Z0-9]+")) {
+                    keyEvent.consume();
+                }
+            }
+        });
+    }
 }
 

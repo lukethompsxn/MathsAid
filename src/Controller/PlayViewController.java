@@ -24,21 +24,29 @@ public class PlayViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        File video = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4");
+        if (model.getCurrentItem() != null && !model.getCurrentItem().isEmpty()) {
+            File video = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4");
+            try {
+                Media media = new Media(video.toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setAutoPlay(true);
+                mediaView.setMediaPlayer(mediaPlayer);
+                mediaPlayer.setOnEndOfMedia(() -> {
+                    setPane();
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        setPane();
+    }
+
+    //Helper method for setting the pane to "MainView" thus returning to the main menu
+    private void setPane() {
         try {
-            Media media = new Media(video.toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setAutoPlay(true);
-            mediaView.setMediaPlayer(mediaPlayer);
-            mediaPlayer.setOnEndOfMedia(() -> {
-                try {
-                    Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + "MainView.fxml"));
-                    Main.mainPane.getChildren().setAll(root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (Exception e) {
+            Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + "MainView.fxml"));
+            Main.mainPane.getChildren().setAll(root);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -75,7 +75,7 @@ public class CreationHeaderController implements Initializable {
     private void setPane(String name, Boolean bool) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
-            Parent root = loader.load(); //needs to have a different controller because initialise is causing an infinite loop.
+            Parent root = loader.load();
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();
