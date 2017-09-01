@@ -41,7 +41,7 @@ public class CreateMenuController {
     //Helper method for setting the pane, takes the desired pane as an argument
     private void setPane (String name){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(".." + _fileSeperator + "View" + _fileSeperator + name + ".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();

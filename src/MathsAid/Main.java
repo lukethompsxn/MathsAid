@@ -12,7 +12,7 @@ public class Main extends Application {
     public static Pane mainPane;
 
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../View/CreationHeader.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/CreationHeader.fxml"));
         primaryStage.setTitle("Maths Learning Aid");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();

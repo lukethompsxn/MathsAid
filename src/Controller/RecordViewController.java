@@ -93,7 +93,7 @@ public class RecordViewController {
     //Helper method for setting the pane, takes the pane name as an argument
     private void setPane(String name) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(".." + _fileSeperator + "View" + _fileSeperator + name + ".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,6 +117,7 @@ public class RecordViewController {
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia(() -> {
+            	System.out.println("bev");
                 Alert redoAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 redoAlert.setTitle("Do you want to record the audio again?");
                 redoAlert.setHeaderText("Do you want to record the audio again?");

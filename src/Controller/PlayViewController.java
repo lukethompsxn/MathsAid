@@ -32,7 +32,7 @@ public class PlayViewController implements Initializable {
             mediaView.setMediaPlayer(mediaPlayer);
             mediaPlayer.setOnEndOfMedia(() -> {
                 try {
-                    Parent root = FXMLLoader.load(getClass().getResource("../View/MainView.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + "MainView.fxml"));
                     Main.mainPane.getChildren().setAll(root);
                 } catch (IOException e) {
                     e.printStackTrace();
