@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -79,6 +80,10 @@ public class RecordViewController {
         Timer timer = new Timer();
         progressBar.progressProperty().bind(timer.progressProperty());
 
+        ColorAdjust adjust = new ColorAdjust();
+        adjust.setHue(-0.4);
+        progressBar.setEffect(adjust);
+
         new Thread(timer).start();
         new Thread(task).start();
 
@@ -114,6 +119,13 @@ public class RecordViewController {
 
         Optional<ButtonType> result = pbAlert.showAndWait();
         if (result.get() == yes) {
+            Timer timer = new Timer();
+            progressBar.progressProperty().bind(timer.progressProperty());
+            ColorAdjust adjust = new ColorAdjust();
+            adjust.setHue(0);
+            progressBar.setEffect(adjust);
+            new Thread(timer).start();
+
             File file = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3");
             Media media = new Media(file.toURI().toString());
             mediaPlayer = new MediaPlayer(media);

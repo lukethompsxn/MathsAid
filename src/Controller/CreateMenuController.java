@@ -75,7 +75,7 @@ public class CreateMenuController implements Initializable{
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - You must enter a name");
         alert.setHeaderText("Error - You must enter a name");
-        alert.setContentText("Please enter a name a press into the text box before clicking \"Submit\"");
+        alert.setContentText("Please enter a name into the text box before clicking \"Submit\"");
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
