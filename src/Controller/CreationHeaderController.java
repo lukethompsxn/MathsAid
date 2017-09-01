@@ -34,37 +34,41 @@ public class CreationHeaderController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Main.mainPane = mainPane;
+        Main.setBtns(playBtn, createBtn, deleteBtn);
+        Main.togglePlayDeleteBtns(true);
         setPane("MainView", false);
-        //disableBtns(true);
     }
 
     //Action for clicking the "Play" button, sets the pane to the play view
     public void playCreation() {
         setPane("PlayView", false);
+        Main.toggleAllBtns(true);
     }
 
     //Action for clicking "Create" button, sets the pane to the create menu view
     public void createCreation() {
         setPane("CreateMenuView", true);
-        //
+        Main.toggleAllBtns(true);
     }
 
     //Action for clicking "Delete" button, launches pop up to confirm before deleting the creation
     public void deleteCreation() {
-    	Alert pbAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        pbAlert.setTitle("Are you sure?");
-        pbAlert.setHeaderText("Are you sure you want to delete \"" + model.getCurrentItem() + "\" ?");
-        pbAlert.setContentText("Press \"Yes\" to delete, or \"No\" to cancel");
-        pbAlert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        ButtonType yes = new ButtonType("Yes");
-        ButtonType no = new ButtonType("No");
-        pbAlert.getButtonTypes().setAll(yes, no);
+        if (model.getCurrentItem() != null && !model.getCurrentItem().isEmpty()) {
+            Alert pbAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            pbAlert.setTitle("Are you sure?");
+            pbAlert.setHeaderText("Are you sure you want to delete \"" + model.getCurrentItem() + "\" ?");
+            pbAlert.setContentText("Press \"Yes\" to delete, or \"No\" to cancel");
+            pbAlert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            ButtonType yes = new ButtonType("Yes");
+            ButtonType no = new ButtonType("No");
+            pbAlert.getButtonTypes().setAll(yes, no);
 
-        Optional<ButtonType> result = pbAlert.showAndWait();
-        if (result.get() == yes) {
-        	model.deleteDirectory();
+            Optional<ButtonType> result = pbAlert.showAndWait();
+            if (result.get() == yes) {
+                model.deleteDirectory();
+            }
         }
-        
+        Main.togglePlayDeleteBtns(true);
     }
 
     //Helper method for setting the pane, takes the desired pane and a boolean for disabling buttons as arguments
@@ -73,28 +77,9 @@ public class CreationHeaderController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
             Parent root = loader.load(); //needs to have a different controller because initialise is causing an infinite loop.
             Main.mainPane.getChildren().setAll(root);
-            /*
-            if  (name.equals("MainView")) {
-                MainViewController controller = loader.<MainViewController>getController();
-                controller.setPlayButton(playBtn, deleteBtn);
-            }
-            */
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //disableBtns(bool);
-    }
-
-    //Helper method for disabling the buttons, takes a boolean as argument
-    private void disableAllBtns(boolean bool) {
-        playBtn.setDisable(bool);
-        createBtn.setDisable(bool);
-        deleteBtn.setDisable(bool);
-    }
-
-    private void disableBtns(Boolean bool) {
-        playBtn.setDisable(bool);
-        deleteBtn.setDisable(bool);
     }
 
 }

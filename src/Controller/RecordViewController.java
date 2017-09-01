@@ -37,7 +37,7 @@ public class RecordViewController {
         protected Integer call() throws Exception {
             String generateCmd = "ffmpeg -y -f lavfi -i color=c=pink:s=480x360:d=3 -vf \"drawtext=fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + model.getCurrentItem() + "\" data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4";
             String combineCmd = "ffmpeg -y -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4" + " -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3 -c copy data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4";
-            String createThumbnail = "ffmpeg -ss 0.1 -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4 -t 1 -s 480x360 -f mjpeg data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "thumbnail.jpg";
+            String createThumbnail = "ffmpeg -ss 0.1 -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4 -t 1 -s 480x400 -f mjpeg data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "thumbnail.jpg";
 
             runInBash(generateCmd);
             runInBash(combineCmd);

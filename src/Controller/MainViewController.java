@@ -1,6 +1,8 @@
 package Controller;
 
+import MathsAid.Main;
 import Model.FileDirector;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,18 +28,21 @@ public class MainViewController implements Initializable{
     @FXML
     private ImageView previewBox;
 
+    /*
     //Sets the current clicked on creation to "currentItem" in FileDirector and displays the preview for the creation
     public void currentSelection() {
-        //playBtn.setDisable(false);
-        //deleteBtn.setDisable(false);
         _currentItem = creationView.getSelectionModel().getSelectedItem();
         model.setCurrentItem(_currentItem);
-        displayPreview();
-    }
+        if (_currentItem != null) {
+            Main.togglePlayDeleteBtns(false);
+            displayPreview();
+        }
+
+    } */
 
     //Displays the preview of the current clicked on creation from the list
     private void displayPreview() {
-        File imageFile = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + _currentItem + _fileSeperator + "thumbnail.jpg");
+        File imageFile = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "thumbnail.jpg");
         Image image = new Image(imageFile.toURI().toString());
         previewBox.setImage(image);
     }
@@ -45,13 +50,20 @@ public class MainViewController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
         creationView.setItems(model.getList());
+        creationView.getSelectionModel().selectedItemProperty().addListener((obj, oldCreation, newCreation) -> {
+            model.setCurrentItem(newCreation);
+            if (newCreation != null) {
+                Main.togglePlayDeleteBtns(false);
+                displayPreview();
+            } else {
+                previewBox.setImage(null);
+            }
+
+        });
+
+        Main.toggleAllBtns(false);
+        Main.togglePlayDeleteBtns(true);
     }
 
-    /*
-    public void setPlayButton(Button pbtn, Button dbtn) {
-        playBtn = pbtn;
-        deleteBtn = dbtn;
-    }
-    */
 
 }

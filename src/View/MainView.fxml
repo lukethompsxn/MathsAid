@@ -9,7 +9,7 @@
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="creationView" onMouseClicked="#currentSelection" />
+            <ListView fx:id="creationView" />
             <ImageView fx:id="previewBox" fitHeight="301.0" fitWidth="353.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
