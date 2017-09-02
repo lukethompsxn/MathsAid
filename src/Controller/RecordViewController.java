@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class RecordViewController {
-    String _fileSeperator = File.separator;
+    String fileSeperator = File.separator;
     FileDirector model = FileDirector.instance();
     MediaPlayer mediaPlayer;
 
@@ -32,13 +32,14 @@ public class RecordViewController {
     @FXML
     private ProgressBar progressBar;
 
+    //Extends Task to perform work on a worker thread for creating the video, combining and creating the thumbnail
     class VideoInBackground extends Task<Integer> {
 
         @Override
         protected Integer call() throws Exception {
-            String generateCmd = "ffmpeg -y -f lavfi -i color=c=pink:s=480x360:d=3 -vf \"drawtext=fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + model.getCurrentItem() + "\" data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4";
-            String combineCmd = "ffmpeg -y -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4" + " -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3 -c copy data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4";
-            String createThumbnail = "ffmpeg -ss 0.1 -i data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "video.mp4 -t 1 -s 480x400 -f mjpeg data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "thumbnail.jpg";
+            String generateCmd = "ffmpeg -y -f lavfi -i color=c=pink:s=480x360:d=3 -vf \"drawtext=fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + model.getCurrentItem() + "\" data" + fileSeperator + model.getCurrentItem() + fileSeperator + "video.mp4";
+            String combineCmd = "ffmpeg -y -i data" + fileSeperator + model.getCurrentItem() + fileSeperator + "video.mp4" + " -i data" + fileSeperator + model.getCurrentItem() + fileSeperator + "audio.mp3 -c copy data" + fileSeperator + model.getCurrentItem() + fileSeperator + "combinedVideo.mp4";
+            String createThumbnail = "ffmpeg -ss 0.1 -i data" + fileSeperator + model.getCurrentItem() + fileSeperator + "video.mp4 -t 1 -s 480x400 -f mjpeg data" + fileSeperator + model.getCurrentItem() + fileSeperator + "thumbnail.jpg";
 
             runInBash(generateCmd);
             runInBash(combineCmd);
@@ -47,16 +48,18 @@ public class RecordViewController {
         }
     }
 
+    //Extends Task to perform work on a worker thread for recording the audio
     class AudioInBackground extends Task<Integer> {
 
         @Override
         protected Integer call() throws Exception {
-            String cmd = "ffmpeg -y -f alsa -i default -t 3 -acodec libmp3lame data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3";
+            String cmd = "ffmpeg -y -f alsa -i default -t 3 -acodec libmp3lame data" + fileSeperator + model.getCurrentItem() + fileSeperator + "audio.mp3";
             runInBash(cmd);
             return 0;
         }
     }
 
+    //Extends Task to perform work on a worker thread for a timer used to show progress in a progress bar
     class Timer extends Task<Integer> {
 
         @Override
@@ -90,7 +93,7 @@ public class RecordViewController {
 
     //Action for the "Cancel" button, returns to main menu
     public void cancel() {
-        if (model.wasOverwriting() == false) {
+        if (!model.wasOverwriting()) {
             model.deleteDirectory();
         }
         setPane("MainView");
@@ -99,13 +102,14 @@ public class RecordViewController {
     //Helper method for setting the pane, takes the pane name as an argument
     private void setPane(String name) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(fileSeperator + "View" + fileSeperator + name + ".fxml"));
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    //Helper method for displaying the alert for whether the user wants to hear back audio, then if you want to redo
     private void playbackAlert() {
         Alert pbAlert = new Alert(Alert.AlertType.CONFIRMATION);
         pbAlert.setTitle("Would you like to hear your recording back?");
@@ -125,7 +129,7 @@ public class RecordViewController {
             progressBar.setEffect(adjust);
             new Thread(timer).start();
 
-            File file = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "audio.mp3");
+            File file = new File(System.getProperty("user.dir") + fileSeperator + "data" + fileSeperator + model.getCurrentItem() + fileSeperator + "audio.mp3");
             Media media = new Media(file.toURI().toString());
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
@@ -155,6 +159,7 @@ public class RecordViewController {
 
     }
 
+    //Helper method for making the process and process builder so commands can be executed in bash
     private void runInBash(String cmd) {
         Process process;
         ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", cmd);
@@ -172,12 +177,14 @@ public class RecordViewController {
         }
     }
 
+    //Helper method to run the video tasks on the worker thread and return to main menu
     private void makeAndReturn() {
         VideoInBackground task = new VideoInBackground();
         new Thread(task).start();
         setPane("MainView");
     }
 
+    //Helper method for disabling and enabling the buttons
     private void disableBtns(Boolean bool) {
         recordBtn.setDisable(bool);
         cancelBtn.setDisable(bool);

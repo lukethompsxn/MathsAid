@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlayViewController implements Initializable {
-    String _fileSeperator = File.separator;
+    String fileSeperator = File.separator;
     FileDirector model = FileDirector.instance();
 
     @FXML
@@ -24,8 +24,9 @@ public class PlayViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Sets the video the play in the media player
         if (model.getCurrentItem() != null && !model.getCurrentItem().isEmpty()) {
-            File video = new File(System.getProperty("user.dir") + _fileSeperator + "data" + _fileSeperator + model.getCurrentItem() + _fileSeperator + "combinedVideo.mp4");
+            File video = new File(System.getProperty("user.dir") + fileSeperator + "data" + fileSeperator + model.getCurrentItem() + fileSeperator + "combinedVideo.mp4");
             try {
                 Media media = new Media(video.toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -44,7 +45,7 @@ public class PlayViewController implements Initializable {
     //Helper method for setting the pane to "MainView" thus returning to the main menu
     private void setPane() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + "MainView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(fileSeperator + "View" + fileSeperator + "MainView.fxml"));
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();

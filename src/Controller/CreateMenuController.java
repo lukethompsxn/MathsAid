@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class CreateMenuController implements Initializable{
     private FileDirector model = FileDirector.instance();
-    private String _fileSeperator = File.separator;
+    private String fileSeperator = File.separator;
 
     @FXML
     public TextField inputText;
@@ -46,14 +46,14 @@ public class CreateMenuController implements Initializable{
     //Helper method for setting the pane, takes the desired pane as an argument
     private void setPane (String name){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(fileSeperator + "View" + fileSeperator + name + ".fxml"));
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //Helper method for displaying the alert box for conforming overwriting the creation/entering a new name
+    //Helper method for displaying the alert box for confirming overwriting the creation/entering a new name
     private void overwriteMessage() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Error: Creation Already Exists");
@@ -83,9 +83,11 @@ public class CreateMenuController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Ensures only letters, numbers, underscores and hyphens are accepted. Also enforces character limit
         inputText.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-            @Override public void handle(KeyEvent keyEvent) {
-                if (!keyEvent.getCharacter().matches("^[a-zA-Z0-9]+")) {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (!keyEvent.getCharacter().matches("^[a-zA-Z0-9_-]+")) {
                     keyEvent.consume();
                 } else {
                     if (inputText.getCharacters().length() > 254) {
@@ -96,11 +98,9 @@ public class CreateMenuController implements Initializable{
                         alert.showAndWait();
                     }
                 }
-
-
             }
         });
-
+        //Sets text colour red if creation already exists, green otherwise
         inputText.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {

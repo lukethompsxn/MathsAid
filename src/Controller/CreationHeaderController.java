@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class CreationHeaderController implements Initializable {
     private FileDirector model = FileDirector.instance();
-    private String _fileSeperator = File.separator;
+    private String fileSeperator = File.separator;
 
     @FXML
     private Button playBtn;
@@ -75,7 +75,7 @@ public class CreationHeaderController implements Initializable {
     //Helper method for setting the pane, takes the desired pane and a boolean for disabling buttons as arguments
     private void setPane(String name) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fileSeperator + "View" + fileSeperator + name + ".fxml"));
             Parent root = loader.load();
             Main.mainPane.getChildren().setAll(root);
         } catch (IOException e) {

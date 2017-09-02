@@ -28,17 +28,20 @@ public class Main extends Application {
         launch(args);
     }
 
+    //Used for toggling the buttons to disable, called from multiple places across the gui (play/delete btns)
     public static void togglePlayDeleteBtns(Boolean bool) {
         playBtn.setDisable(bool);
         deleteBtn.setDisable(bool);
     }
 
+    //Used for toggling the buttons to disable, called from multiple places across the gui (all btns)
     public static void toggleAllBtns(Boolean bool) {
         playBtn.setDisable(bool);
         createBtn.setDisable(bool);
         deleteBtn.setDisable(bool);
     }
 
+    //Used for setting the buttons, called from the intialize method in CreationHeaderController
     public static void setBtns(Button play, Button create, Button delete) {
         playBtn = play;
         createBtn = create;
