@@ -70,7 +70,7 @@ public class CreateMenuController implements Initializable{
         }
     }
 
-    //Helper metod for displaying an alert message when no input text is given
+    //Helper method for displaying an alert message when no input text is given
     private void emptyMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error - You must enter a name");
@@ -87,9 +87,32 @@ public class CreateMenuController implements Initializable{
             @Override public void handle(KeyEvent keyEvent) {
                 if (!keyEvent.getCharacter().matches("^[a-zA-Z0-9]+")) {
                     keyEvent.consume();
+                } else {
+                    if (inputText.getCharacters().length() > 254) {
+                        keyEvent.consume();
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error - Character Limit Reached");
+                        alert.setContentText("Maximum Number of Characters Reached");
+                        alert.showAndWait();
+                    }
+                }
+
+
+            }
+        });
+
+        inputText.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (model.getList().contains(inputText.getCharacters().toString())) {
+                    inputText.setStyle(("-fx-text-fill: red"));
+                } else {
+                    inputText.setStyle(("-fx-text-fill: green"));
                 }
             }
         });
+
+
     }
 }
 

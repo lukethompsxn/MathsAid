@@ -36,18 +36,18 @@ public class CreationHeaderController implements Initializable {
         Main.mainPane = mainPane;
         Main.setBtns(playBtn, createBtn, deleteBtn);
         Main.togglePlayDeleteBtns(true);
-        setPane("MainView", false);
+        setPane("MainView");
     }
 
     //Action for clicking the "Play" button, sets the pane to the play view
     public void playCreation() {
-        setPane("PlayView", false);
+        setPane("PlayView");
         Main.toggleAllBtns(true);
     }
 
     //Action for clicking "Create" button, sets the pane to the create menu view
     public void createCreation() {
-        setPane("CreateMenuView", true);
+        setPane("CreateMenuView");
         Main.toggleAllBtns(true);
     }
 
@@ -68,11 +68,12 @@ public class CreationHeaderController implements Initializable {
                 model.deleteDirectory();
             }
         }
+        setPane("MainView");
         Main.togglePlayDeleteBtns(true);
     }
 
     //Helper method for setting the pane, takes the desired pane and a boolean for disabling buttons as arguments
-    private void setPane(String name, Boolean bool) {
+    private void setPane(String name) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(_fileSeperator + "View" + _fileSeperator + name + ".fxml"));
             Parent root = loader.load();

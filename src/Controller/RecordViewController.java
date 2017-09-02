@@ -47,7 +47,7 @@ public class RecordViewController {
         }
     }
 
-    class AudioInBackground extends  Task<Integer> {
+    class AudioInBackground extends Task<Integer> {
 
         @Override
         protected Integer call() throws Exception {
@@ -57,15 +57,14 @@ public class RecordViewController {
         }
     }
 
-    class Timer extends  Task<Integer> {
+    class Timer extends Task<Integer> {
 
         @Override
         protected Integer call() throws Exception {
-            for (int i = 0; i < 30; i++) {
-                updateProgress(i, 29);
-                Thread.sleep(100);
+            for (int i = 0; i < 60; i++) {
+                updateProgress(i, 59);
+                Thread.sleep(50);
             }
-            progressBar.progressProperty().unbind();
             return 0;
         }
     }
@@ -86,14 +85,14 @@ public class RecordViewController {
 
         new Thread(timer).start();
         new Thread(task).start();
-
-
     }
 
 
     //Action for the "Cancel" button, returns to main menu
     public void cancel() {
-        model.deleteDirectory();
+        if (model.wasOverwriting() == false) {
+            model.deleteDirectory();
+        }
         setPane("MainView");
     }
 
@@ -145,6 +144,7 @@ public class RecordViewController {
                     makeAndReturn();
                 } else {
                     disableBtns(false);
+                    progressBar.progressProperty().unbind();
                     progressBar.setProgress(0.0);
                 }
             });

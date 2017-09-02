@@ -72,7 +72,6 @@ public class FileDirector {
             dirPath.delete();
             _listOfCreations.remove(_currentItem);
         }
-
     }
 
     //Called from CreateMenuController when a creation is being created
@@ -87,14 +86,20 @@ public class FileDirector {
         return true;
     }
 
-
-
     //Called from MainViewController's initialize method to set the ListView to the list of creations on start up
     public ObservableList<String> getList() {
         return _listOfCreations;
     }
 
+    //Called from the "cancel" method in recordView to test whether the creation was overwriting another
+    public boolean wasOverwriting() {
+        if (new File(_path + _fileSeperator + "data" + _fileSeperator + _currentItem + _fileSeperator + "video.mp4").exists()) {
+            return true;
+        }
+        return false;
+    }
 
+    //Called from "CreateMenuController" when a creation is being made
     public void addToList(String creation) {
         _listOfCreations.add(creation);
     }
