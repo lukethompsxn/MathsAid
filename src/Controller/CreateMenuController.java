@@ -27,7 +27,7 @@ public class CreateMenuController implements Initializable{
     //Action for "Submit" button, ensures no duplicate creation then sets pane to recording pane
     public void createCreation() {
         boolean success = model.createDirectory(inputText.getCharacters().toString());
-        if (inputText.getCharacters().toString() == null || inputText.getCharacters().toString().isEmpty()) {
+        if (inputText.getCharacters().toString().isEmpty()) {
             emptyMessage();
         } else if  (!success) {
             overwriteMessage();
@@ -57,7 +57,7 @@ public class CreateMenuController implements Initializable{
     private void overwriteMessage() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Error: Creation Already Exists");
-        alert.setContentText("This creation already exists, please select \"Overwrite\" to overwrite the creation, or \"OK\" to enter a new name:");
+        alert.setContentText("This creation already exists, please select \"Overwrite\" to overwrite \"" + inputText.getCharacters().toString() + "\", or \"OK\" to enter a new name:");
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         ButtonType overwrite = new ButtonType("Overwrite");
         ButtonType OK = new ButtonType("OK");
@@ -90,7 +90,7 @@ public class CreateMenuController implements Initializable{
                 if (!keyEvent.getCharacter().matches("^[a-zA-Z0-9_-]+")) {
                     keyEvent.consume();
                 } else {
-                    if (inputText.getCharacters().length() > 254) {
+                    if (inputText.getCharacters().length() > 50) {
                         keyEvent.consume();
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error - Character Limit Reached");

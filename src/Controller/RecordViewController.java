@@ -162,7 +162,7 @@ public class RecordViewController {
     //Helper method for making the process and process builder so commands can be executed in bash
     private void runInBash(String cmd) {
         Process process;
-        ProcessBuilder processBuilder = new ProcessBuilder("/bin/bash", "-c", cmd);
+        ProcessBuilder processBuilder = new ProcessBuilder(fileSeperator +"bin" + fileSeperator + "bash", "-c", cmd);
         try {
             process = processBuilder.start();
         } catch (IOException excep) {

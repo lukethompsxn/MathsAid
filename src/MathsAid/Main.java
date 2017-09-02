@@ -9,14 +9,17 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 public class Main extends Application {
     public static Pane mainPane;
     private static Button playBtn;
     private static Button createBtn;
     private static Button deleteBtn;
+    private String fileSeperator = File.separator;
 
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/View/CreationHeader.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(fileSeperator + "View" + fileSeperator + "CreationHeader.fxml"));
         primaryStage.setTitle("Maths Learning Aid");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setResizable(false);

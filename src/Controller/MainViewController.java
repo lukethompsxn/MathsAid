@@ -2,6 +2,7 @@ package Controller;
 
 import MathsAid.Main;
 import Model.FileDirector;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 
@@ -32,7 +34,13 @@ public class MainViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources)  {
-        creationView.setItems(model.getList());
+        //Sets the list of creations to the list view, in a sorted order (alphabetically ignoring case)
+        creationView.setItems(new SortedList<String>(model.getList(), new Comparator<String>() {
+                    @Override
+                    public int compare(String o1, String o2) {
+                        return o1.compareToIgnoreCase(o2);
+                    }
+                }));
         //Adds listener for selection events
         creationView.getSelectionModel().selectedItemProperty().addListener((obj, oldCreation, newCreation) -> {
             model.setCurrentItem(newCreation);
@@ -42,7 +50,6 @@ public class MainViewController implements Initializable{
             } else {
                 previewBox.setImage(null);
             }
-
         });
 
         Main.toggleAllBtns(false);
