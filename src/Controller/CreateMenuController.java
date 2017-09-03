@@ -30,7 +30,13 @@ public class CreateMenuController implements Initializable{
         if (inputText.getCharacters().toString().isEmpty()) {
             emptyMessage();
         } else if  (!success) {
-            overwriteMessage();
+        	if (model.getList().contains(inputText.getCharacters().toString())) {
+        		overwriteMessage();
+        	} else {
+        		model.setCurrentItem(inputText.getCharacters().toString());
+                model.addToList(inputText.getCharacters().toString());
+        		setPane("RecordView");
+        	}
         } else {
             model.setCurrentItem(inputText.getCharacters().toString());
             model.addToList(inputText.getCharacters().toString());

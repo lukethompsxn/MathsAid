@@ -33,10 +33,10 @@ public class RecordViewController {
     private ProgressBar progressBar;
 
     //Extends Task to perform work on a worker thread for creating the video, combining and creating the thumbnail
-    class VideoInBackground extends Task<Integer> {
+    class VideoInBackground extends Task<Void> {
 
         @Override
-        protected Integer call() throws Exception {
+        protected Void call() throws Exception {
             String generateCmd = "ffmpeg -y -f lavfi -i color=c=pink:s=480x360:d=3 -vf \"drawtext=fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2:text=" + model.getCurrentItem() + "\" data" + fileSeperator + model.getCurrentItem() + fileSeperator + "video.mp4";
             String combineCmd = "ffmpeg -y -i data" + fileSeperator + model.getCurrentItem() + fileSeperator + "video.mp4" + " -i data" + fileSeperator + model.getCurrentItem() + fileSeperator + "audio.mp3 -c copy data" + fileSeperator + model.getCurrentItem() + fileSeperator + "combinedVideo.mp4";
             String createThumbnail = "ffmpeg -ss 0.1 -i data" + fileSeperator + model.getCurrentItem() + fileSeperator + "video.mp4 -t 1 -s 480x400 -f mjpeg data" + fileSeperator + model.getCurrentItem() + fileSeperator + "thumbnail.jpg";
@@ -44,31 +44,31 @@ public class RecordViewController {
             runInBash(generateCmd);
             runInBash(combineCmd);
             runInBash(createThumbnail);
-            return 0;
+            return null;
         }
     }
 
     //Extends Task to perform work on a worker thread for recording the audio
-    class AudioInBackground extends Task<Integer> {
+    class AudioInBackground extends Task<Void> {
 
         @Override
-        protected Integer call() throws Exception {
+        protected Void call() throws Exception {
             String cmd = "ffmpeg -y -f alsa -i default -t 3 -acodec libmp3lame data" + fileSeperator + model.getCurrentItem() + fileSeperator + "audio.mp3";
             runInBash(cmd);
-            return 0;
+            return null;
         }
     }
 
     //Extends Task to perform work on a worker thread for a timer used to show progress in a progress bar
-    class Timer extends Task<Integer> {
+    class Timer extends Task<Void> {
 
         @Override
-        protected Integer call() throws Exception {
+        protected Void call() throws Exception {
             for (int i = 0; i < 60; i++) {
                 updateProgress(i, 59);
                 Thread.sleep(50);
             }
-            return 0;
+            return null;
         }
     }
 
@@ -134,6 +134,7 @@ public class RecordViewController {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setOnEndOfMedia(() -> {
+            	mediaPlayer.dispose();
                 Alert redoAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 redoAlert.setTitle("Do you want to record the audio again?");
                 redoAlert.setHeaderText("Do you want to record the audio again?");

@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class PlayViewController implements Initializable {
     String fileSeperator = File.separator;
     FileDirector model = FileDirector.instance();
-
+    
     @FXML
     private MediaView mediaView;
 
@@ -33,13 +33,15 @@ public class PlayViewController implements Initializable {
                 mediaPlayer.setAutoPlay(true);
                 mediaView.setMediaPlayer(mediaPlayer);
                 mediaPlayer.setOnEndOfMedia(() -> {
+                	mediaPlayer.dispose();
                     setPane();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        } 
         setPane();
+        
     }
 
     //Helper method for setting the pane to "MainView" thus returning to the main menu
