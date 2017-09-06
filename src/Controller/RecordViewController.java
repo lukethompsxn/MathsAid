@@ -32,7 +32,7 @@ public class RecordViewController {
     @FXML
     private ProgressBar progressBar;
 
-    //Extends Task to perform work on a worker thread for creating the video, combining and creating the thumbnail
+    //Extends Task to perform work on a worker thread for creating the video, combining and creating the thumbnail.
     class VideoInBackground extends Task<Void> {
 
         @Override
